@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+
+
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+
+
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+<!--    <mvc:annotation-driven></mvc:annotation-driven>-->
+    <!--    激活SpringMVC消息转换功能-->
+
+
+
+    <!--    专注于Service类-->
+    <context:component-scan base-package="com.dfc.Service">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--引入数据文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
+        <property name="maxIdle"   value="${jdbc.maxIdle}"/>
+        <property name="initialSize" value="${jdbc.initial}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--确定数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--    引入所有mappers.xml文件-->
+        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+                <property name="configuration">
+                    <bean class="org.apache.ibatis.session.Configuration">
+                        <!--    Mybatis自身配置文件可以直接放到这里，这个是下划线风格转为驼峰命名-->
+                        <property name="mapUnderscoreToCamelCase" value="true"></property>
+                        <property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+                    </bean>
+                </property>
+
+<!--或者直接导入配置好的Mybatis配置文件-->
+<!--        <property name="configLocation" value="classpath:Mybatis-config.xml"/>-->
+
+
+    </bean>
+
+    <!--    持久层Dao层的所有接口扫描进来-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+
+        <!--    mappers层扫描-->
+        <property name="basePackage" value="com.dfc.mappers"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+
+
+    </bean>
+
+
+
+
+
+    <!--  事务管理  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+
+
+
+</beans>

@@ -1,0 +1,551 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+
+		<style type="text/css">
+			.mui-card .mui-control-content {
+				padding: 10px;
+			}
+
+			.mui-control-content {
+				height: 510px;
+			}
+
+			.xuanxiangka {
+				height: 100%;
+			}
+
+			.searchkuang {
+				padding-top: 7.5px;
+				padding-left: 3px;
+				display: -webkit-box;
+				-webkit-box-orient: horizontal;
+			}
+
+			.shaixuan {
+				padding-top: 1px;
+				padding-left: 3px;
+				display: -webkit-box;
+				-webkit-box-orient: horizontal;
+			}
+
+			.searchleft {
+				-webkit-box-flex: 3.2;
+			}
+
+			.twotab {
+				-webkit-box-flex: 2.5;
+			}
+
+			.searchbtn {
+				margin-left: 2px;
+				-webkit-box-flex: 0.7;
+
+			}
+
+			.shaixuanbtn {
+				margin-left: 4px;
+				-webkit-box-flex: 0.1;
+				/* height: 100%; */
+			}
+			
+			.mui-table-view-cell2 {
+				position: relative;
+				overflow: hidden;
+				padding: 11px 15px;
+				-webkit-touch-callout: none
+			}
+			
+
+			.mui-media-body2 {
+				font-size: 16px;
+				font-weight: 500;
+				line-height: 30px;
+				margin-bottom: 0;
+				margin-left: 44px;
+				padding-left: 10px;
+				color: #333;
+				display: flex;
+
+			}
+
+			.mui-media-object2 {
+				line-height: 80px;
+				max-width: 80px;
+				height: 110px;
+				width:80px;
+			}
+
+			.mypoint {
+				height: 100%;
+				float: right;
+				/* vertical-align: middle; */
+				text-align: center;
+				display: inline-block;
+				font-size: 22px;
+				font-style: italic;
+				padding-left: 27px;
+				align-self: center;
+
+			}
+
+			.wenzi {
+				float: left;
+			}
+		</style>
+	</head>
+
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/init.js"></script>
+	<body>
+
+		<div class="mui-content">
+			<div class="searchkuang">
+				<div class="mui-input-row mui-search mui-plus-visible searchleft">
+					<input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="请输入你的关键词">
+				</div>
+				<div class="searchbtn">
+					<button id="truesearch" type="button" class="mui-btn mui-btn-primary searchbtn">搜索</button>
+				</div>
+			</div>
+			<div>
+				<div class="shaixuan" style="padding: 3px 10px;">
+					<!-- <div class="twotab"> -->
+					<div id="segmentedControl" class="mui-segmented-control ">
+						<a id="zonghe" class="mui-control-item mui-active" href="#item1">综合</a>
+						<a id="pingfen" class="mui-control-item" href="#item2">按评分</a>
+					</div>
+					<!-- </div> -->
+
+					<!-- 					<div class="shaixuanbtn">
+						<button id="select-btn" type="button" class="mui-btn mui-btn-primary mui-btn-outlined " style="font-size: 18px;">筛选</button>
+					</div> -->
+
+				</div>
+				<div class="xuanxiangka">
+					<div id="item1" class="mui-control-content mui-active">
+						<div id="scroll" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul id="table1" class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div id="item2" class="mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul id="table2" class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</div>
+
+
+
+		<script src="../js/configurl.js"></script>
+		<script>
+			// 			mui.init(
+			// // 			{
+			// // 
+			// // 				preloadPages: [{
+			// // 					id: 'appraise.html',
+			// // 					url: 'student/Appraise.html'
+			// // 				}]
+			// // 
+			// // 			}
+			// 			);
+	            function refreshSearch() {
+						// mui.toast("进来了");
+						document.getElementById('search').value = null;
+						var btn = document.getElementById('zonghe');
+						mui.trigger(btn, 'tap');
+
+					}
+
+
+			(function($, doc) {
+
+
+
+				$('#scroll').scroll({
+					indicators: true //是否显示滚动条
+				});
+				$('#scroll2').scroll({
+					indicators: true //是否显示滚动条
+				});
+
+
+				$.plusReady(function() {
+					var mytrueId = plus.storage.getItem("userid");
+
+					//重写back方法
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+							plus.storage.clear();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+
+
+
+                          //判断是否已经评价过
+					function IsAppraiseAgain(id) {
+
+						console.log(mytrueId);
+						var url = getport() + '/OnlineAppraise_war_exploded/result/again';
+						$.ajax(url, {
+							data: {
+								key: id,
+								account: mytrueId
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								console.log(data);
+								console.log(typeof data);
+								var mydata = JSON.stringify(data);
+								console.log(typeof mydata);
+								if (data != null) {
+									if (mydata == "true") {
+										flag = true;
+										// $.toast('进来了！');
+										mui.toast('已评价过');
+
+									} else {
+
+										$.openWindow({
+											id: 'Appraise',
+											url: 'Appraise.html',
+											extras: {
+												keyid: id,
+											},
+											show: {
+												autoShow: false
+											}
+										});
+
+
+									}
+								} else {
+									alert("为空");
+								}
+
+
+							},
+							error: function(xhr, type, errorThrown) {
+
+							}
+						});
+
+
+
+					}
+
+
+
+
+
+
+
+
+
+					//列表点击事件
+					var detailPage = null;
+					$(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+
+
+						var primarykey = this.getAttribute("id");
+						// mui.toast(primarykey);
+						IsAppraiseAgain(primarykey);
+
+					});
+
+
+
+
+
+
+
+
+
+
+
+					function palindrome(str) {
+						var arr = str.replace(
+							/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g, "");
+						console.log(arr); //"0000"
+						return arr;
+					}
+
+
+
+					//刷新按钮
+
+					// 				      var btn=doc.getElementById('refresh-btn');
+					// 					  if(btn!=null){
+					//  					  btn.addEventListener('tap', function () {
+					// 						        $.toast("进来了");             
+					// 								doc.getElementById('search').value="";
+					// 								var btn = doc.getElementById('zonghe');
+					// 								mui.trigger(btn, 'tap');
+					// 							},false);
+					//                          }
+
+
+
+					function getm3(Str) {
+						var t1html = [];
+
+						var url = getport() + '/OnlineAppraise_war_exploded/message/m3';
+						mui.ajax(url, {
+							data: {
+								searchkey: Str
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							// headers:{'Content-Type':'application/json'},
+							success: function(data) {
+
+
+
+								if (data != null && data != "") {
+
+									for (let i = 0; i < data.length; i++) {
+										t1html.push(
+											'<li id="'+data[i].id+'" class="mui-table-view-cell"><img id="imgurl" class="mui-media-object2 mui-pull-left" src="' +
+											data[i].imageurl +
+											'"><div class="mui-media-body2"><div  class="wenzi"><p id="major" class="mui-ellipsis">专业：' + data[
+												i].mname + '</p><span id="course"> 课程名：' + data[i].cname +
+											'</span><h4 id="cteacher" style="margin-top: 10px;">老师:' + data[i].tname +
+											'</h4></div><div class="mypoint"><span>' + data[i].wholeAppraise + '分</span></div></div></li>');
+									}
+									document.getElementById("table1").innerHTML = t1html;
+
+
+
+								} else {
+									t1html.push(
+										' <div style="text-align: center;margin-top: 20px;"><h4>抱歉，没有找到你想要的信息</h4><button id="refresh-btn" type="button" class="mui-btn mui-btn-primary mui-btn-outlined " style="font-size: 25px; "  onclick="refreshSearch()">刷新</button></div>'
+									);
+									document.getElementById("table1").innerHTML = t1html;
+
+
+
+								}
+
+
+
+
+							},
+							error: function(xhr, type, errorThrown) {
+								alert(xhr.toString());
+								console.log(type);
+								console.log(errorThrown);
+							}
+						});
+
+					}
+
+
+
+                    function getm4(newStr){
+						var url2 = getport() + '/OnlineAppraise_war_exploded/message/m4';
+						mui.ajax(url2, {
+							data: {
+								searchkey: newStr
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							// headers:{'Content-Type':'application/json'},
+							success: function(data) {
+						
+								var t2html = [];
+						
+								if (data != null && data != "") {
+						
+									for (let i = 0; i < data.length; i++) {
+						
+										t2html.push(
+											'<li id="'+data[i].id+'" class="mui-table-view-cell"><img id="imgurl" class="mui-media-object2 mui-pull-left" src="' +
+											data[i].imageurl +
+											'"><div class="mui-media-body2"><div  class="wenzi"><p id="major" class="mui-ellipsis">专业：' + data[
+												i].mname + '</p><span id="course"> 课程名：' + data[i].cname +
+											'</span><h4 id="cteacher" style="margin-top: 10px;">老师:' + data[i].tname +
+											'</h4></div><div class="mypoint"><span>' + data[i].wholeAppraise + '分</span></div></div></li>');
+						
+									}
+									document.getElementById("table2").innerHTML = t2html;
+						
+						
+						
+								} else {
+									t2html.push(
+										'<div style="text-align: center;margin-top: 20px;"><h4>抱歉，没有找到你想要的信息</h4><button id="refresh-btn" type="button" class="mui-btn mui-btn-primary mui-btn-outlined " style="font-size: 25px; "  onclick="refreshSearch()">刷新</button></div>'
+									);
+									document.getElementById("table2").innerHTML = t2html;
+						
+						
+						
+								}
+						
+						
+						
+						
+							},
+							error: function(xhr, type, errorThrown) {
+								alert(xhr.toString());
+								console.log(type);
+								console.log(errorThrown);
+							}
+						});
+						
+						
+					}
+
+
+
+                      
+					  var str = null;
+					 var toSearch = function() {
+						// var str = mycontent.replace(/(^\s*)|(\s*$)/g, ''); //去除空格;
+						var mycontent = doc.getElementById("search").value;
+						 str =mycontent.replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g,""); 
+                           console.log(typeof str);
+						if (mycontent == ''|| mycontent == undefined || mycontent == null) {
+							// doc.getElementById("search").value = "";
+							mui.toast('关键词不能为空');
+
+
+						} else {
+// var newStr = mycontent.replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g,"");
+							
+							// var newStr = palindrome( document.getElementById("search").value);
+
+							doc.activeElement.blur(); //收起虚拟键盘
+
+							mui.toast(str);
+							//搜索关键词在此处,ajax
+                           getm3(str);
+                           getm4(str);
+
+							
+
+
+
+						}
+					}
+
+
+
+
+
+
+
+
+
+					//键盘搜索确定事件
+					doc.getElementById("search").addEventListener("keypress", function(event) {
+						if (event.keyCode == "13") {
+							toSearch(); //TODO 完成搜索事件
+							event.preventDefault(); // 阻止默认事件---阻止页面刷新
+						}
+					});
+
+
+					// 搜索点击事件
+					doc.getElementById("truesearch").addEventListener('tap', function(event) {
+						toSearch();
+						event.preventDefault(); // 阻止默认事件---阻止页面刷新
+					})
+
+
+
+
+
+
+
+
+
+
+
+					// 综合点击事件
+					doc.getElementById("zonghe").addEventListener('tap', function(event) {
+						var key = doc.getElementById("search").value.replace(/(^\s*)|(\s*$)/g, '');
+						getm3(key);
+                         
+
+					})
+
+					// 评分点击事件
+					doc.getElementById("pingfen").addEventListener('tap', function(event) {
+						var key = doc.getElementById("search").value.replace(/(^\s*)|(\s*$)/g, '');
+						getm4(key);
+						
+					})
+
+
+
+				
+
+
+
+
+
+
+
+
+
+				});
+			}(mui, document));
+		</script>
+
+
+
+
+
+
+	</body>
+
+</html>

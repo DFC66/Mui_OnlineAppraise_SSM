@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+			
+        }
+		
+		body{ 
+            display: flex;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto;
+			background:#4187F1; }
+		.buttondiv{
+		  margin-top: 90px;
+		
+		  
+		}
+		
+		.mui-content2 {
+			background: #4187F1
+		 display: inline-block;
+			 margin: auto;
+            align-items: center; /*定义body的元素垂直居中*/
+            justify-content: center; /*定义body的里的元素水平居中*/
+		}
+		
+		
+		.twobutton{
+			
+			font-size: 50px;
+		}
+		
+		.mui-btn-primary2,
+		input[type=submit] {
+			color: #fff;
+			border: 4px solid #FFFFFF;;
+			border-radius: 15px;
+			background-color: #4187F1
+			
+		}
+	</style>
+
+		<script type="text/javascript">
+			(function($, doc) {
+				$.init();
+
+				$.plusReady(function() {
+
+					//重写back方法
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+							plus.storage.clear();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+
+					var btn = ["确定", "取消"];
+					doc.getElementById("exit").addEventListener('tap', function() {
+
+						$.confirm('确认关闭应用？', btn, function(e) {
+							if (e.index == 0) {
+								plus.runtime.quit();
+							}
+						});
+					});
+
+
+
+					//学生界面进入监听
+					doc.getElementById("student").addEventListener('tap', function() {
+						// plus.webview.currentWebview().close();//本窗口关闭
+						$.openWindow({
+								url: 'student/StudentLogin.html',
+								id: 'studentLogin.html',
+								createNew: false
+							}
+
+						);
+
+					});
+
+
+					//老师界面进入监听
+					doc.getElementById("teacher").addEventListener('tap', function() {
+
+						// plus.webview.currentWebview().close();
+						$.openWindow({
+								url: 'teacher/InsertMessage.html',
+								id: 'InsertMessage.html',
+								//        styles:{
+								//       top:newpage-top-position,//新页面顶部位置
+								//       bottom:newage-bottom-position,//新页面底部位置
+								//       width:newpage-width,//新页面宽度，默认为100%
+								//       height:newpage-height,//新页面高度，默认为100%
+								//       ......
+								//     },
+								//     extras:{
+								//       .....//自定义扩展参数，可以用来处理页面间传值
+								//     },
+								createNew: false
+							}
+
+						);
+
+					});
+
+
+
+				});
+
+
+
+
+
+			}(mui, document));
+		</script>
+	</head>
+	<body>
+
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a><span id="exit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-left">退出</span></a>
+			<h1 class="mui-title">在线评教系统</h1>
+		</header>
+		<div class="mui-content2">
+			<div align="center">
+				<button id="student" type="button" class="mui-btn mui-btn-primary2 twobutton">我是学生</button>
+
+			</div>
+			<div align="center" class="buttondiv">
+				<button id="teacher" type="button" class="mui-btn mui-btn-primary2 twobutton ">我是老师</button>
+			</div>
+
+		</div>
+
+
+
+	</body>
+
+
+
+</html>

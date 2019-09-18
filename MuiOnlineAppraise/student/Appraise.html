@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+
+
+		<style>
+			.xianshi{
+				display: inline-block;
+				
+			}
+			.yincang{
+				display: none;
+				
+			}
+			
+			.mui-input-group1{
+				height: 0;
+			}
+			
+			.rds1{
+				
+				font-style: inherit;
+			}
+			
+			
+			
+			
+			.mui-pagination2 {
+		display: inline-block;
+		margin: 0 auto;
+		padding-left: 0;
+		border-radius: 6px
+	}
+	
+	.mui-content2 {
+		
+		background-color: #efeff4;
+		-webkit-overflow-scrolling: touch
+		
+	}
+	.mui-pagination-lg2>li>a,
+	.mui-pagination-lg2>li>span {
+		font-size: 14px;
+		padding: 10px 10px
+	}
+	
+	.xiangge{
+		
+		padding: 0px 5px 0px;
+		
+	}
+	
+	.lidibu{
+		padding-bottom: 70px
+		
+	}
+	.tmessage{
+		
+		
+		padding: 8px 3.5px 6px;
+		
+	}
+	.neiju{
+		padding-top: 10px;
+		padding-left: 4px;
+	}
+	
+	
+	.questioncss{
+		padding: 5px 8px 0px;
+		
+	}
+	.shuoming{
+		float: left;
+		padding-left: 0.375rem;
+		padding-right: 4px;
+	}
+	.Qcss{
+		padding-top: 2px;
+	     width: 100%;
+		
+	}
+	
+	.realtmessage{
+		font-size: 20px;
+		
+	}
+	
+	.mui-card2{
+		font-size: 18px;
+		position: relative;
+		overflow: hidden;
+		margin: 10px ;
+		border-radius: 4px;
+		background-color: #fff;
+		background-clip: padding-box;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, .3)
+		
+		
+	}
+	.mui-table-view-cell.mui-checkbox2 input[type=checkbox],
+	.mui-table-view-cell.mui-radio2 input[type=radio] {
+		top: 12px
+	}
+	
+	
+	
+</style>
+
+	</head>
+	<body>
+
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!-- <h1 id="suoyin" class="mui-title">在线评教系统</h1> -->
+			<a><span id="put" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">提交</span></a>
+		</header>
+
+		<div class="mui-content">
+
+			<div id="teachermessage" class="tmessage">
+				<div class="neiju">
+					<h5 class="shuoming">专业名称</h5>
+					<span id="major" class="realtmessage">暂无名称</span>
+				</div>
+				<div class="neiju">
+					<h5 class="shuoming">课程名称:</h5>
+					<span id="course" class="realtmessage">暂无名称</span>
+				</div>
+				<div class="neiju" style="margin-top: 3px;">
+					<h5 class="shuoming">任课老师:</h5>
+					<span id="c_teacher" class="realtmessage">暂无名称</span>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="allq" class="mui-content">
+			<div id="q1" class="Qcss xianshi">
+				<!-- 整个回答问题的代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">老师教学用心投入，乐于答疑解惑</span>
+				</div>
+				<div id="appraise1" class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio1" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio1" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio1" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio1" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio1" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div id="q2" class="Qcss yincang ">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">老师告知了课程要求，教学进度和考核方法</span>
+				</div>
+				<div class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio2" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio2" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio2" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio2" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio2" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+			<div id="q3" class="Qcss yincang">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">教学内容充实，任务明确，体现实践操作能力培养</span>
+				</div>
+				<div class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio3" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio3" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio3" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio3" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio3" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+			<div id="q4" class="Qcss yincang">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">老师关注我的学习状况，教学方法灵活有效，善于启发思考</span>
+				</div>
+				<div class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio4" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio4" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio4" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio4" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio4" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="q5" class="Qcss yincang">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">老师严格要求学生，维护课堂秩序</span>
+				</div>
+				<div id="appraise5" class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio5" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio5" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio5" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio5" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio5" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="q6" class="Qcss yincang">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">老师能及时讲评反馈作业</span>
+				</div>
+				<div class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio6" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio6" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio6" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio6" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio6" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="q7" class="Qcss yincang">
+				<!-- 整个问题代码块 -->
+				<div class="questioncss">
+					<span style="font-size: 20px;">通过老师的教学，我培养了实践操作能力</span>
+				</div>
+				<div class="mui-card2">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常满意</label>
+							<input name="radio7" type="radio" value="10">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>满意</label>
+							<input name="radio7" type="radio" value="9">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一般</label>
+							<input name="radio7" type="radio" value="8">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不满意</label>
+							<input name="radio7" type="radio" value="7">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>非常不满意</label>
+							<input name="radio7" type="radio" value="6">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<nav class="mui-bar mui-bar-tab" style="text-align: center;">
+
+			<div class="mui-content-padded">
+				<ul class="mui-pagination mui-pagination-lg2">
+					<li class="mui-previous">
+						<a href="#">
+							上一题
+						</a>
+					</li>
+					<li class="mui-active">
+						<a href="#">
+							1
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							2
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							3
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							4
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							5
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							6
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							7
+						</a>
+					</li>
+
+					<li class="mui-next">
+						<a href="#">
+							下一题
+						</a>
+					</li>
+
+				</ul>
+			</div>
+
+		</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</body>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/configurl.js"></script>
+
+
+
+	<script type="text/javascript">
+		mui.init(
+// 					{
+// 						   beforeback: function() {　　 
+// 			            //获得父页面的webview
+// 			            var list = plus.webview.currentWebview().opener();　　
+// 			            //触发父页面的自定义事件(fresh),从而进行刷新
+// 			            mui.fire(list, 'fresh');
+// 			//             //返回true,继续页面关闭逻辑
+// 			//             return true;
+// 			        }		
+// 					}
+		);
+		window.onload = function() {
+						mui.plusReady(function(){
+							var self = plus.webview.currentWebview();
+							// console.log(self.keyid);
+							// console.log(self.userid);
+							var keyurl = getport() + '/OnlineAppraise_war_exploded/message/detail';
+							mui.ajax(keyurl, {
+								data: {
+									keyid: self.keyid
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								// headers:{'Content-Type':'application/json'},
+								success: function(data) {
+									if (data != null) {
+										// console.log(data);
+										document.getElementById('major').innerText = data.mname;
+										document.getElementById('course').innerText = data.cname;
+										document.getElementById('c_teacher').innerText = data.tname;
+										QuanjuId = data.id;
+										mname = data.mname;
+										cname = data.cname;
+										tname = data.tname;
+		
+		
+									} else {
+		
+		
+									}
+		
+								},
+								error: function(xhr, type, errorThrown) {
+									alert(xhr.toString());
+									console.log(type);
+									console.log(errorThrown);
+								}
+		
+		
+		
+		
+		
+		
+							});
+		
+		 
+							//关闭等待框
+							plus.nativeUI.closeWaiting();
+							//显示当前页面
+							mui.currentWebview.show();
+		
+		});
+						
+		
+					}
+		
+
+		
+		
+		var  account = null;
+		var QuanjuId = null;
+		var mname = null;
+		var cname = null;
+		var tname = null;
+		
+	mui.plusReady(function () {
+		    account = plus.storage.getItem("userid");
+		
+		(function($) {
+
+
+			// 			function getVals() {
+			// 
+			// 				var res = getRadioRes('rds1');
+			// 
+			// 				if (res == null) {
+			// 					mui.toast('请选择');
+			// 
+			// 					return;
+			// 
+			// 				}
+			// 
+			//                return res;
+			// 
+			// 				
+			// 
+			// 			}
+
+
+
+			// 			function getRadioRes(className) {
+			// 
+			// 				var rdsObj = document.getElementsByClassName(className);
+			// 
+			// 				var checkVal = null;
+			// 
+			// 				for (i = 0; i < rdsObj.length; ++i) {
+			// 
+			// 					if (rdsObj[i].checked&&document.getElementById('appraise1').querySelector('checked')) {
+			// 
+			// 						checkVal = rdsObj[i].value;
+			// 
+			// 					}
+			// 
+			// 				}
+			// 
+			// 				return checkVal;
+			// 
+			// 			}
+
+
+
+
+			// 			document.getElementById('appraise1').addEventListener('tap', function(e) {
+			// 
+			// 			      var selected1 = 	getVals();
+			// 				  
+			// 				  
+			// 			});
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
+
+
+
+
+
+			var fenpages = document.getElementsByClassName("Qcss");
+			// console.log(fenpages);
+			$('.mui-pagination').on('tap', 'a', function() {
+				var li = this.parentNode;
+				// console.log(li.innerText);
+				var classList = li.classList;
+
+				if (!classList.contains('mui-active') && !classList.contains('mui-disabled')) {
+
+
+					var all = document.getElementById('allq');
+					var oldselect = all.querySelector('.xianshi');
+
+					var active = li.parentNode.querySelector('.mui-active');
+					if (classList.contains('mui-previous')) { //previous
+						if (active) {
+							var previous = active.previousElementSibling;
+							// console.log('previous', previous);
+							if (previous && !previous.classList.contains('mui-previous')) {
+								$.trigger(previous.querySelector('a'), 'tap');
+							} else {
+								classList.add('mui-disabled');
+							}
+						}
+					} else if (classList.contains('mui-next')) { //next
+						if (active) {
+							var next = active.nextElementSibling;
+							if (next && !next.classList.contains('mui-next')) {
+								$.trigger(next.querySelector('a'), 'tap');
+							} else {
+								classList.add('mui-disabled');
+							}
+						}
+					} else { //page
+
+
+						var all = document.getElementById('allq');
+						var oldselect = all.parentNode.querySelector('.xianshi');
+
+
+						// 						console.log(fenpages);
+						// 						for (var i = 0; i < fenpages.length; i++) {
+						// 
+						// 							fenpages[i].classList.add('yincang');
+						// 						}
+						// 
+						active.classList.remove('mui-active');
+						classList.add('mui-active');
+
+						oldselect.classList.remove('xianshi');
+						oldselect.classList.add('yincang');
+
+
+						var page = parseInt(this.innerText);
+						// console.log(fenpages[page]);
+						fenpages[page - 1].classList.remove('yincang');
+						fenpages[page - 1].classList.add('xianshi');
+
+
+
+						// console.log(this.innerHTML);
+						var previousPageElement = li.parentNode.querySelector('.mui-previous');
+						var nextPageElement = li.parentNode.querySelector('.mui-next');
+						previousPageElement.classList.remove('mui-disabled');
+						nextPageElement.classList.remove('mui-disabled');
+						if (page <= 1) {
+							previousPageElement.classList.add('mui-disabled');
+						} else if (page >= 7) {
+							nextPageElement.classList.add('mui-disabled');
+						}
+					}
+				}
+			});
+
+
+
+
+
+		})(mui);
+
+
+		$(function() {
+// 			result = new Object();
+// 			result.id = null;
+// 			result.user_id = null;
+// 			result.m_name = null;
+// 			result.c_name = null;
+// 			result.t_name = null;
+// 			result.appraise1 = 0;
+// 			result.appraise2 = 0;
+// 			result.appraise3 = 0;
+// 			result.appraise4 = 0;
+// 			result.appraise5 = 0;
+// 			result.appraise6 = 0;
+// 			result.appraise7 = 0;
+// 
+           var btnArray = ['确认', '取消'];
+		 document.getElementById('put').addEventListener('tap', function() {
+
+
+              
+				mui.confirm(' ', '确认评价吗？', btnArray, function(e) {
+					if (e.index == 0) {
+						//ajax网络请求 预约
+						SendAppraise();
+						
+						
+					} else {
+						// mui.toast('取消');
+					}
+				})
+	
+
+
+
+
+
+
+
+				// 				var val = [];
+				// 				for(var i = 1 ;i<=7;i++){
+				// 				     val[i]=$('input:radio[name=radio'+i+']:checked').val();
+				// 					 if(val[i]!=null){
+				// 						 result.(appraise+'+i+') =val[i];
+				// 					 }
+				// 					 else{
+				// 						 mui.toast('先完成所有评价');
+				// 					 }
+				// 					
+				// 	
+				// 				}
+				// 				
+				// 				alert(result.appraise3);
+				// 				alert(result.appraise4);
+
+
+
+
+
+
+
+
+
+
+			});
+
+
+
+
+
+
+
+
+            function SendAppraise(){
+				
+				
+				var val1 = $('input:radio[name=radio1]:checked').val();
+				var val2 = $('input:radio[name=radio2]:checked').val();
+				var val3 = $('input:radio[name=radio3]:checked').val();
+				var val4 = $('input:radio[name=radio4]:checked').val();
+				var val5 = $('input:radio[name=radio5]:checked').val();
+				var val6 = $('input:radio[name=radio6]:checked').val();
+				var val7 = $('input:radio[name=radio7]:checked').val();
+				
+				if (val1 == null || val2 == null || val3 == null || val4 == null || val5 == null || val6 == null || val7 ==
+					null) {
+					mui.toast('先完成所有评价');
+				
+				} else {
+					var panduan = true;
+				
+					// alert(QuanjuId);
+					
+						
+					console.log(account);
+					
+					var result ={
+						id:QuanjuId,
+						user_id:account,
+						m_name :mname,
+						c_name :cname,
+						t_name :tname,
+						appraise1:parseInt(val1),
+						appraise2:parseInt(val2),
+						appraise3:parseInt(val3),
+						appraise4:parseInt(val4),
+						appraise5:parseInt(val5),
+						appraise6:parseInt(val6),
+						appraise7:parseInt(val7)
+					}
+					
+					console.log(JSON.stringify(result));
+					var url = getport() + '/OnlineAppraise_war_exploded/result/r1';
+					mui.ajax(url, {
+						data: result,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+				            
+						},
+						error: function(xhr, type, errorThrown) {
+							panduan = false;
+						}
+					});
+				
+					if (panduan) {
+						mui.toast('评价成功！');
+						var hp = plus.webview.getWebviewById("HomePage");
+						if(hp!=null){
+							hp.reload();
+						}
+						mui.back();
+					} else {
+						mui.toast('服务器连接失败，评价失败');
+				
+					}
+				
+				
+				}
+			}
+
+
+		})
+	
+	});
+	</script>
+
+
+
+
+
+
+
+</html>

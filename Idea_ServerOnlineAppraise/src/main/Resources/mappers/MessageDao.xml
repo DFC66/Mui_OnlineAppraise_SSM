@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfc.mappers.MessageDao">
+
+    <select id="getMessage" resultType="com.dfc.pojo.Message">
+        select * from  message where id = #{id}
+    </select>
+
+
+
+    <select id="getWholeMessage" resultType="com.dfc.pojo.Message">
+        select  * from  message
+    </select>
+    <select id="getHighMessage" resultType="com.dfc.pojo.Message">
+        select  * from  message order by
+
+            wholeAppraise desc
+
+
+    </select>
+
+    <select id="getSearchMessage" resultType="com.dfc.pojo.Message">
+        select  * from  message
+        where 1=1
+        <if test="searchkey!=null and searchkey!=''">
+        and
+           CONCAT(mname,cname,tname) LIKE CONCAT('%',#{searchkey},'%')
+        </if>
+
+    </select>
+
+
+<!--    <select id="getSearchMessage" resultType="com.dfc.pojo.TeacherMessage">-->
+<!--        select  * from  message-->
+<!--        <where>-->
+<!--            <if test="searchkey!=null and searchkey!=''">-->
+<!--                <bind name="mykey" value="'%' + searchkey + '%'"/>-->
+<!--                and-->
+<!--                CONCAT(mname,cname,tname) LIKE #{mykey}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    <select id="getSearchHighMessage" resultType="com.dfc.pojo.TeacherMessage">-->
+<!--        select  * from  message-->
+<!--        where 1=1-->
+<!--        <if test="searchkey!=null and searchkey!=''">-->
+<!--                <bind name="mykey" value="'%' + searchkey + '%'"/>-->
+<!--                and-->
+<!--                CONCAT(mname,cname,tname) LIKE #{mykey}-->
+<!--            </if>-->
+
+<!--          order by  wholeAppraise desc-->
+<!--    </select>-->
+
+
+    <select id="getSearchHighMessage" resultType="com.dfc.pojo.Message">
+        select  * from  message
+        where 1=1
+        <if test="searchkey!=null and searchkey!=''">
+            and
+            CONCAT(mname,cname,tname) LIKE CONCAT('%',#{searchkey},'%')
+        </if>
+        order by  wholeAppraise desc
+    </select>
+
+
+
+
+
+<update id="UpdateWholeAppraise">
+  update message A inner join(select id,(avg(appraise1)+avg(appraise2)+avg(appraise3)+avg(appraise4)+avg(appraise5)+avg(appraise6)+avg(appraise7))/7 as point from result group by id) as B on A.id = B.id set A.wholeAppraise = B.point
+</update>
+
+
+
+
+
+
+<!--主键自增需要标记-->
+    <insert id="InsertMessage" parameterType="com.dfc.pojo.Message" useGeneratedKeys="true" keyProperty="id">
+        insert into message(mname,cname,tname,Imageurl)values (#{mname},#{cname},#{tname},#{Imageurl})
+
+    </insert>
+
+</mapper>

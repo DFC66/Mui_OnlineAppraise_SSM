@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		
+		<style>
+			
+			.juzhong{
+				margin-top: 50px;
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="suoyin" class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content juzhong">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+			</form>
+			<!-- 			<form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						自动登录
+						<div id="autoLogin" class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form> -->
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<!-- <div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				</div> -->
+			</div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/configurl.js"></script>
+		<script type="text/javascript">
+			mui.init()
+
+			(function($, doc) {
+				$.init();
+
+				var myuserid = null; //定义全局变量账号
+
+
+
+
+				$.plusReady(function() {
+					var mainPage = plus.webview.getWebviewById("HomePage");
+					// console.log(mainPage);
+					var main_loaded_flag = false;
+
+
+					if (!mainPage) {
+						mainPage = $.preload({
+							id: 'HomePage',
+							url: 'HomePage.html',
+
+						});
+					} else {
+						main_loaded_flag = true;
+					}
+
+
+					mainPage.addEventListener("loaded", function() {
+						main_loaded_flag = true;
+					});
+					var toHomePage = function() {
+						//使用定时器的原因：
+						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+						var id = setInterval(function() {
+							if (main_loaded_flag) {
+								clearInterval(id);
+								$.fire(mainPage, 'show', {
+									userid: myuserid
+								});
+								mainPage.show("pop-in");
+							}
+						}, 20);
+					};
+
+
+
+					user = new Object();
+					user.my_id = null;
+					user.my_pw = null;
+
+					//判断登录
+					function getLogin() {
+						var isSuccess = false;
+						var id = document.getElementById("account").value;
+						var pw = document.getElementById("password").value;
+						console.log()
+						var myid = id.replace(/(^\s*)|(\s*$)/g, ''); //去除空格;
+						var mypw = pw.replace(/(^\s*)|(\s*$)/g, ''); //去除空格;
+
+
+
+						if (myid == '' || mypw == '') {
+
+							mui.toast('账号密码不能为空');
+
+
+						} else {
+
+							user.my_id = myid;
+							user.my_pw = mypw;
+							var url = getport() + '/OnlineAppraise_war_exploded/user/login';
+							$.ajax(url, {
+								data: user,
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									console.log(data);
+									// console.log(typeof data);
+									var mydata = JSON.stringify(data);
+									if (data != null) {
+										if (mydata == "true") {
+
+											$.toast('登录成功！');
+											myuserid = user.my_id;
+											toHomePage();
+
+											// mui.toast('对了6666666666666');
+										} else {
+											
+											$.toast('登录失败，请检查账号密码');
+											// mui.toast('错了啊啊啊啊啊啊啊啊啊啊');
+											
+										}
+									} else {
+										alert("为空");
+									}
+
+
+								},
+								error: function(xhr, type, errorThrown) {
+
+								}
+							});
+
+
+
+
+						}
+
+
+						//                     if(isSuccess){
+						// 						return true;
+						// 					}else
+						// 					
+						//                      return false;
+
+
+					}
+
+
+
+
+					//学生监听
+					doc.getElementById('login').addEventListener('tap', function() {
+						// plus.webview.currentWebview().close();//本窗口关闭
+
+						getLogin();
+
+
+					});
+
+
+
+
+
+
+				});
+
+
+
+
+
+
+
+
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfc.mappers.ResultDao">
+<insert id="InsertAppraise" parameterType="com.dfc.pojo.Result" >
+    insert  into result(id,user_id,
+    m_name,
+    c_name,
+    t_name,
+     appraise1,
+     appraise2,
+     appraise3,
+     appraise4,
+     appraise5,
+     appraise6,
+     appraise7) values(#{id,jdbcType=INTEGER},#{user_id},#{m_name},#{c_name},#{t_name},#{appraise1},#{appraise2,jdbcType=INTEGER},#{appraise3,jdbcType=INTEGER},#{appraise4,jdbcType=INTEGER},#{appraise5,jdbcType=INTEGER},#{appraise6,jdbcType=INTEGER},#{appraise7,jdbcType=INTEGER})
+
+</insert>
+
+    <select id="IsAppraiseAgain" resultType="com.dfc.pojo.Result">
+        select * from result where id = #{myid} and user_id=#{myuserid}
+    </select>
+
+
+
+</mapper>

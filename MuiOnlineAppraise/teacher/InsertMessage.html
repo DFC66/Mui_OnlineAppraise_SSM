@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+
+		<style type="text/css">
+			.mui-card .mui-control-content {
+				padding: 10px;
+			}
+
+			.mui-control-content {
+				height: 510px;
+			}
+
+			.xuanxiangka {
+				height: 100%;
+			}
+
+			.searchkuang {
+				padding-top: 7.5px;
+				padding-left: 3px;
+				display: -webkit-box;
+				-webkit-box-orient: horizontal;
+			}
+
+			.shaixuan {
+				padding-top: 1px;
+				padding-left: 3px;
+				display: -webkit-box;
+				-webkit-box-orient: horizontal;
+			}
+
+			.searchleft {
+				-webkit-box-flex: 3.2;
+			}
+
+			.twotab {
+				-webkit-box-flex: 2.5;
+			}
+
+			.searchbtn {
+				margin-left: 2px;
+				-webkit-box-flex: 0.7;
+
+			}
+
+			.shaixuanbtn {
+				margin-left: 4px;
+				-webkit-box-flex: 0.1;
+				/* height: 100%; */
+			}
+
+			.mui-media-body2 {
+				font-size: 16px;
+				font-weight: 500;
+				line-height: 30px;
+				margin-bottom: 0;
+				margin-left: 44px;
+				padding-left: 50px;
+				color: #333
+			}
+
+			.mui-media-object2 {
+				line-height: 80px;
+				max-width: 80px;
+				height: 80px
+			}
+
+			.imagecss {
+				height: 180px;
+				width: 120px;
+				/* text-align: center; */
+				background-color: #C4C4C4;
+			}
+
+			.divimagecss {
+
+
+				padding-top: 15px;
+
+			}
+		</style>
+	</head>
+
+
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/configurl.js"></script>
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">添加课程评价</h1>
+		</header>
+		<div class="mui-content">
+			<div style="text-align: center;margin-top: 6px;">
+				<span>点击下方添加或更换图片</span>
+			</div>
+			<div align="center" class="divimagecss">
+				<img src="" id="hint" class="imagecss" onclick="choosePhoto(this)" name="file" />
+			</div>
+			<form  class="mui-input-group" style="margin: 10px;">
+				<div class="mui-input-row">
+					<label>专业名称</label>
+					<input id='mname' type="text" class="mui-input-clear mui-input" placeholder="请输入专业名称">
+				</div>
+				<div class="mui-input-row">
+					<label>课程名称</label>
+					<input id='cname' type="text" class="mui-input-clear mui-input" placeholder="请输入课程名称">
+				</div>
+				<div class="mui-input-row">
+					<label>老师姓名</label>
+					<input id='tname' type="text" class="mui-input-clear mui-input" placeholder="请输入老师姓名">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+			</div>
+		</div>
+
+
+
+
+		<script>
+			mui.init();
+
+			function choosePhoto(event) {
+				if (mui.os.plus) {
+					var a = [{
+						title: '拍照'
+					}, {
+						title: '从手机相册选择'
+					}];
+					plus.nativeUI.actionSheet({
+						cancel: '取消',
+						buttons: a
+					}, function(b) {
+						switch (b.index) {
+							case 0:
+								break;
+
+							case 1:
+								//拍照  
+								getImages(event);
+								break;
+
+							case 2:
+								//打开相册  
+								galleryImages(event);
+								break;
+
+							default:
+								break;
+						}
+					}, false);
+
+				}
+			}
+
+						//拍照  
+			function getImages(event) {
+				var mobileCamera = plus.camera.getCamera();
+				mobileCamera.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						var path = entry.toLocalURL() + '?version=' + new Date().getTime();
+						uploadHeadImg(path, event);
+						console.log(path);
+					}, function(err) {
+						console.log("读取拍照文件错误");
+					});
+				}, function(e) {
+					console.log("er", err);
+				}, function() {
+					filename: '_doc/head.png';
+				});
+			}
+ 
+			//本地相册选择   
+			function galleryImages(event) {
+				console.log("你选择了从相册选择");
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						plus.io.resolveLocalFileSystemURL('_doc/', function(root) {
+							root.getFile('head.png', {}, function(file) {
+								//文件已经存在
+								file.remove(function() {
+									console.log("文件移除成功");
+									entry.copyTo(root, 'head.png', function(e) {
+										var path = e.fullPath + '?version=' + new Date().getTime();
+										uploadHeadImg(path, event);
+									}, function(err) {
+										console.log("copy image fail: ", err);
+									});
+								}, function(err) {
+									console.log("删除图片失败：（" + JSON.stringify(err) + ")");
+								});
+							}, function(err) {
+								//打开文件失败
+								entry.copyTo(root, 'head.png', function(e) {
+									var path = e.fullPath + '?version=' + new Date().getTime();
+									uploadHeadImg(path, event);
+								}, function(err) {
+									console.log("上传图片失败：（" + JSON.stringify(err) + ")");
+								});
+							});
+						}, function(e) {
+							console.log("读取文件夹失败：（" + JSON.stringify(err) + ")");
+						});
+					});
+				}, function(err) {
+					console.log("读取拍照文件失败: ", err);
+				}, {
+					filter: 'image'
+				});
+			};
+
+			var container = mui("#progress-bar p");
+			var stateText = localStorage.getItem('$token');
+
+			//上传图片
+			function uploadHeadImg(imgPath, event) {
+				var hint = document.getElementById('hint');
+				hint.style.display = "inline-block";
+				hint.innerHTML = '上传中...';
+				hint.style.color = "#778899";
+				//选中图片之后，头像当前的照片变为选择的照片
+				var mainImg = event;
+				mainImg.src = imgPath;
+
+				// 				var image = new Image();
+				// 				image.src = imgPath;
+				// 
+				// 				image.onload = function() {
+				// 					var path = '/api/appUser/uploadCheckPhoto';
+				// 					var picNum = event.id;
+				// 					var base64 = getBase64Image(image);
+				// 					var jsonObj = {
+				// 						'token': stateText,
+				// 						'picNum': picNum,
+				// 
+				// 					}
+
+				// 					var url = getApiUrl(path, jsonObj);
+				// 					mui.ajax(url, {
+				// 						data: {
+				// 							'imgDatas': base64
+				// 						},
+				// 						dataType: 'json', //服务器返回json格式数据
+				// 						type: 'post', //HTTP请求类型
+				// 						timeout: 25000, //超时时间设置为25秒；
+				// 						success: function(data) {
+				// 							if (data.code == 0) {
+				// 								localStorage.setItem('$head_image', data.src);
+				// 								simulateLoading(container, 0, 100);
+				// 								setTimeout(function() {
+				// 									//mui.toast(data.msg);
+				// 									hint.innerHTML = '上传成功';
+				// 									hint.style.color = "#3CB371";
+				// 								}, 2560);
+				// 							} else {
+				// 								mui.alert(data.msg);
+				// 							}
+				// 						},
+				// 						error: function(xhr, type, errorThrown) {
+				// 							if (type == 'timeout') {
+				// 								mui.alert('服务器连接超时，请稍后再试');
+				// 							}
+				// 						}
+				// 					});
+				// 				}
+			}
+
+
+
+			
+
+
+			function uploadMessage(file, m_name, c_name, t_name) {
+				
+				mui.plusReady(function() {
+					var wait = plus.nativeUI.showWaiting("正在上传");
+					
+					var url = getport() + '/OnlineAppraise_war_exploded/teacher/im';
+					var task = plus.uploader.createUpload(url, {
+						method: "POST"
+					}, function(t, status) {
+						if (status == 200) {
+							
+							if(t.responseText=="success"){
+								console.log("上传成功：" + t.responseText);
+								mui.alert('上传成功');
+								wait.close();
+								mui.back();
+							}else if(t.responseText=="failed"){
+				
+								mui.alert('上传失败');
+								wait.close();
+							}else{
+								mui.alert('未知原因');
+							}
+							
+						} else {
+							console.log("上传失败：" + status);
+							wait.close();
+							mui.alert('服务器连接失败');
+						}
+
+
+
+					});
+// 					var message = {
+// 						id:null,
+// 						mname: m_name,
+// 						cname: c_name,
+// 						tname: t_name,
+// 						Imageurl:null,
+// 						wholeAppraise:null
+// 					}
+
+
+            var  code = getRandomCode(10); 
+					// task.addData("mymessage", message);
+					task.addData("mname",m_name);
+					task.addData("cname",c_name);
+					task.addData("tname",t_name);
+					task.addFile(file, {
+						key: "file",
+						name:code,
+						mime:"image/png"
+					});
+					task.start();
+
+                  })
+				}
+
+
+			
+
+function getRandomCode(length) {
+   if (length > 0) {
+      var data = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+      var nums = "";
+      for (var i = 0; i < length; i++) {
+         var r = parseInt(Math.random() * 61);
+         nums += data[r];
+      }
+      return nums;
+   } else {
+      return false;
+   }
+}
+
+
+
+
+			$(function() {
+
+
+				document.getElementById("submit").addEventListener("tap", function() {
+					var imgPath = $("img").attr("src");
+					console.log(imgPath);
+
+					var m_name = document.getElementById("mname").value;
+					var c_name = document.getElementById("cname").value;
+					var t_name = document.getElementById("tname").value;
+					if (m_name == '' || c_name == '' || t_name == '') {
+						mui.alert('信息不能为空');
+					} else if(imgPath==''){
+						
+						mui.alert('上传图片不能为空')	;
+										
+						}
+					else {
+
+						uploadMessage(imgPath, m_name, c_name, t_name);
+
+					}
+
+
+
+				})
+			})
+		</script>
+
+
+
+
+
+
+	</body>
+
+</html>

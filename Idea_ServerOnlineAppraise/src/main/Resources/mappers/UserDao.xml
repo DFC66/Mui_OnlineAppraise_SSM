@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfc.mappers.UserDao">
+  <select id="getLogin" resultType="com.dfc.pojo.User">
+     select  *  from user where my_id =#{my_id}  and  my_pw =#{my_pw}
+
+  </select>
+
+
+</mapper>
